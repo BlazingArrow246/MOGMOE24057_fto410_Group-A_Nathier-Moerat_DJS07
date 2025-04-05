@@ -1,26 +1,27 @@
 import React from "react"
-import memesData from "../memesData.js"
 
 export default function Meme() {
     
-    
+    //Meme variable to store bottom text, top text and random image
     const [meme, setMeme] = React.useState({
         topText: "",
         bottomText: "",
         randomImage: "https://i.imgflip.com/1bij.jpg"
 })
+    //State variable to store all memes
         const[allMemes, setAllMemes] = React.useState([])
 
         React.useEffect(() => {
             
-            fetch("https://api.imgflip.com/get_memes")
+            fetch("https://api.imgflip.com/get_memes") //Fetches a list of memes from the Imgflip API
                 .then(res => res.json())
                 .then(data => setAllMemes(data.data.memes))
         }
         , [])
 
+    //Selects a random meme image from the allMemes array and updates the randomImage property of the meme state.
     function getMemeImage() {
-        const allMemes = allMemes.data.memes
+    
         const randomNumber = Math.floor(Math.random() * allMemes.length)
         const url= allMemes[randomNumber].url
         setMeme(prevMeme => ({
@@ -29,6 +30,7 @@ export default function Meme() {
         }))
     }
 
+    //Handles changes to the input fields for topText and bottomText.
     function handleChange(event) {
         const { name, value } = event.target
         setMeme(prevMeme => ({
@@ -37,11 +39,12 @@ export default function Meme() {
         }))
     }
     return (
+ 
+        //The component returns a <main> element containing two sections: form and meme.
  <main>
     
-    <p>{url}</p>
 
-        <div classname= "form">
+        <div className= "form">
 
            <input 
                 type="text" 
@@ -56,8 +59,8 @@ export default function Meme() {
                  type="text"
                  placeholder="Bottom text" 
                  className="form--input"
-                 name= "topText"
-                 value={meme.topText}
+                 name= "bottomText"
+                 value={meme.bottomText}
                  onChange={handleChange}
             
             />
@@ -74,5 +77,6 @@ export default function Meme() {
         <h2 className="meme--text top">{meme.topText}</h2>
         <h2 className="meme--text bottom">{meme.bottomText}</h2>
     </div>
+
   </main> 
   )}
