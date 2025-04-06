@@ -3,6 +3,7 @@ import React from "react"
 export default function Meme() {
     
     //Meme variable to store bottom text, top text and random image
+    //initial state
     const [meme, setMeme] = React.useState({
         topText: "",
         bottomText: "",
